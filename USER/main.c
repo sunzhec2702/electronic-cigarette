@@ -1,6 +1,6 @@
 #include "delay.h"
 #include "sys.h"
-#include "screen.h"
+#include "oled.h"
 #include "exti.h"
 #include "key.h"
 #include "timer.h"
@@ -37,7 +37,7 @@ int main(void)
         Key_GPIO_Config();
         exti_key_init();
         #ifdef DEBUG_POWER_OFF_WAKE_UP
-        Screen_Init();
+        OLED_Init();
         OLED_Clear();
         OLED_Display_On();
         draw_about_mesage();
@@ -49,9 +49,8 @@ int main(void)
     #endif
 
     // OLED Init
-    Screen_Init();
+    OLED_Init();
     OLED_Clear();
-    
     //
     low_switch_power_init();
 

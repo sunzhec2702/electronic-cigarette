@@ -1,6 +1,10 @@
 #include "menu_about.h"
-#include "screen.h"
+#include "Oled.h"
 #include "oled_content.h"
+
+#define SW_VER1    2
+#define SW_VER2    2
+#define SW_VER3    6
 
 // declare three key struct.
 static key_callback keys_callback[] = {

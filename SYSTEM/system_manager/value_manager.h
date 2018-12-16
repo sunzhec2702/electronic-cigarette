@@ -23,7 +23,6 @@
 #define PID_POWER_SET_VALUE         14
 #define MAX_PRESET_POWER_VALUE      15
 #define PID_POWER_RT_OUT_VALUE      16
-#define PID_WEAK_MAX_POWER_OUT_LIMIT    17
 
 #define TEMP_HIGH       1
 #define TEMP_NORMAL     0

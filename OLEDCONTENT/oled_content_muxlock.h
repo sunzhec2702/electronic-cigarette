@@ -10,10 +10,4 @@ extern void lock_oled(void);
 extern void unlock_oled(void);
 extern u8 get_oled_lock(void);
 
-
-extern void lock_weak_oled(void);
-extern void unlock_weak_oled(void);
-extern u8 get_oled_weak_lock(void);
-
-
 #endif

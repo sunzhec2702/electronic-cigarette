@@ -1,6 +1,6 @@
 #include "menu_mx_tcr.h"
 #include "key.h"
-#include "screen.h"
+#include "oled.h"
 #include "oled_content.h"
 #include "system_state.h"
 #include "temperature_mode_select_menu.h"
@@ -37,11 +37,7 @@ u8 menu_mx_parameter_combine_event_callback (void * keys_t)
 void menu_mx_parameter_draw_whole_screen()
 {
     OLED_Clear();
-    #if defined SCREEN_069
     draw_mx_mode_icon(get_temperature_mode_index()-M1_MODE+1, 1);
-    #elif defined SCREEN_096
-    draw_mx_mode_icon(3-get_temperature_mode_index()+1, 1);
-    #endif
     switch(get_current_ui_id()) {
         case MENU_MX_TCR_ID:
             draw_mx_tcr_string(1);
@@ -56,11 +52,7 @@ void menu_mx_parameter_draw_whole_screen()
 
 void menu_mx_parameter_draw_current_value()
 {
-    #if defined SCREEN_069
     draw_mx_mode_icon(get_temperature_mode_index()-M1_MODE+1, 1);
-    #elif defined SCREEN_096
-    draw_mx_mode_icon(3-get_temperature_mode_index()+1, 1);
-    #endif
     switch(get_current_ui_id()) {
         case MENU_MX_TCR_ID:
             draw_mx_tcr_string(1);

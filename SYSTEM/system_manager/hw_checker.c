@@ -7,29 +7,15 @@
 #include "exti_charging.h"
 #include "timer_key.h"
 #include "PID.h"
-#include "key.h"
-#include "oled_content_muxlock.h"
 
-u8 check_static_battery()
+u8 check_battery()
 {
     
     u16 dynamic_battery_value = value_read(BATTERY_VALUE);
     u16 static_battery_value = value_read(STATIC_BATTERY_VALUE);
-    if (static_battery_value <= BATTERY_PROTECT_VALUE) {
-        // Users are not allowed to smoke again in any low battery issues until the static battery value is more than unprotected value.
-        //value_backup_func(BATTERY_SMOKE_REG_VALUE, BATTERY_SMOKE_OFFSET_VALUE, BATTERY_SMOKE_MASK_VALUE, BATTERY_SMOKE_PROTECT);
-        return ERROR;
-    }
-    return SUCCESS;
-}
-
-u8 check_dynamic_battery()
-{   
-    u16 dynamic_battery_value = value_read(BATTERY_VALUE);
-    u16 static_battery_value = value_read(STATIC_BATTERY_VALUE);
-    if ((Get_PID_Flow_Cnt() == PID_DERATING_VBAT_LOW) ||
+    if ((Get_PID_Flow_Cnt() == PID_STOP_VBAT_LOW) ||
         (dynamic_battery_value <= BATTERY_PROTECT_DYNAMIC_VALUE) ||
-        //(value_restore_func(BATTERY_SMOKE_REG_VALUE, BATTERY_SMOKE_OFFSET_VALUE, BATTERY_SMOKE_MASK_VALUE) == BATTERY_SMOKE_PROTECT) ||
+        (value_restore_func(BATTERY_SMOKE_REG_VALUE, BATTERY_SMOKE_OFFSET_VALUE, BATTERY_SMOKE_MASK_VALUE) == BATTERY_SMOKE_PROTECT) ||
         (static_battery_value <= BATTERY_PROTECT_VALUE)) {
         // Users are not allowed to smoke again in any low battery issues until the static battery value is more than unprotected value.
         value_backup_func(BATTERY_SMOKE_REG_VALUE, BATTERY_SMOKE_OFFSET_VALUE, BATTERY_SMOKE_MASK_VALUE, BATTERY_SMOKE_PROTECT);
@@ -126,18 +112,10 @@ u8 check_hw_fire()
         ENABLE_FRESH_SCREEN_TIMER(SYS_LOCK);
         return ERROR;
     }
-    if (check_dynamic_battery() == ERROR) {
-        if (get_weak_start_tic() == SMOKE_START_DUMMY_TIC && get_oled_weak_lock() == SYS_UNLOCK) {
-            set_weak_start_tic(get_keys_state()[KEY_CONFIRM].press_keep_tic);
-            lock_weak_oled();
-            show_battery_weak_message();
-        } else {
-            if ((get_keys_state()[KEY_CONFIRM].press_keep_tic - get_weak_start_tic()) >= WEAK_BATTERY_SHOW_TIME && get_oled_weak_lock() == SYS_LOCK) {
-                unlock_weak_oled();
-                draw_weak_battery_revert();
-            }
-        }
-        return SUCCESS;
+    if (check_battery() == ERROR) {
+        show_battery_weak_message();
+        ENABLE_FRESH_SCREEN_TIMER(SYS_LOCK);
+        return ERROR;
     }
     if (check_low_temp() == ERROR) {
         show_temp_low_message();

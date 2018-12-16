@@ -1,6 +1,6 @@
 #include "main_menu_temperature_value_key_action.h"
 #include "key.h"
-#include "screen.h"
+#include "Oled.h"
 #include "system_state.h"
 #include "value_manager.h"
 #include "UI_manager.h"

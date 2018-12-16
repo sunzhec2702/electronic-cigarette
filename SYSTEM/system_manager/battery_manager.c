@@ -4,7 +4,7 @@
 #include "system_state.h"
 #include "oled_content.h"
 #include "flag_manager.h"
-#include "screen.h"
+#include "oled.h"
 #include "PID.h"
 #include "value_manager.h"
 #include "PWM_TIM1.h"
@@ -48,7 +48,7 @@ void static_battery_value_update_task()
                 draw_voltage_value(get_battery_level());
                 #endif
                 // Show Low Battery Message and power off.
-                if (check_static_battery() == ERROR) {
+                if (check_battery() == ERROR) {
                     check_system_state();
                 }
             }

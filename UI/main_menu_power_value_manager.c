@@ -2,7 +2,7 @@
 #include "UI_manager.h"
 #include "main_menu_power.h"
 #include "main_menu_voltage.h"
-#include "screen.h"
+#include "oled.h"
 #include "oled_content.h"
 #include "value_manager.h"
 #include "hw_checker.h"

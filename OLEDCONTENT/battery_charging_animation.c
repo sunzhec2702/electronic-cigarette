@@ -1,6 +1,6 @@
 #include "battery_charging_animation.h"
 #include "value_manager.h"
-#include "screen.h"
+#include "oled.h"
 #include "battery_charging_content.h"
 #include "system_state.h"
 #include "hw_checker.h"
@@ -25,25 +25,6 @@ void draw_charging_animation_power_on()
     }
 }
 
-#if defined SCREEN_096
-void draw_charging_animation()
-{
-    if (get_system_state() == STATE_CHARGING && get_battery_level() != BATTERY_LEVEL_NOT_INIT) {
-        OLED_Display_On();
-        if (current_level == 0) {
-            current_level = get_battery_level();
-        } else {
-            current_level--;
-        }
-        OLED_ShowString_Mode(0, PART4_PAGE - 3, "Charging", 16, 1);
-        draw_battery_charging_power_on(current_level);
-        #ifdef DEBUG_CHARGING_BATTERY_VALUE
-        draw_register_value(value_read(STATIC_BATTERY_VALUE));
-        draw_voltage_value(get_battery_level());
-        #endif
-    }
-}
-#elif defined SCREEN_069
 void draw_charging_animation()
 {
     if (get_system_state() == STATE_CHARGING && get_battery_level() != BATTERY_LEVEL_NOT_INIT) {
@@ -60,14 +41,12 @@ void draw_charging_animation()
         #endif
     }
 }
-#endif
 
 void draw_battery_charging_power_on(u8 current_level)
 {
     draw_battery_icon_charge(current_level);
 }
 
-#ifdef SCREEN_069
 void draw_battery_charging(u8 level)
 {
     if (get_oled_lock() != OLED_LOCKED) {
@@ -98,5 +77,3 @@ void draw_power_on_screen()
         unlock_oled();
     }
 }
-#endif
-

@@ -2,23 +2,13 @@
 #define __TEMP_MODE_SELECT_MENU_H
 #include "sys.h"
 
-enum {
-    NI_MODE = 0,
-    #if defined SCREEN_069
-    TI_MODE,
-    SS_MODE,
-    M1_MODE,
-    M2_MODE,
-    M3_MODE,
-    #elif defined SCREEN_096
-    M3_MODE,
-    M2_MODE,
-    M1_MODE,
-    SS_MODE,
-    TI_MODE,
-    #endif
-    TEMP_MODES_NUMBER
-};
+#define NI_MODE                 0
+#define TI_MODE                 1
+#define SS_MODE                 2
+#define M1_MODE                 3
+#define M2_MODE                 4
+#define M3_MODE                 5
+#define TEMP_MODES_NUMBER       6
 
 #define TEMP_MODE_SELECT_REG_INDEX  3
 #define TEMP_MODE_SELECT_REG_OFFSET 20

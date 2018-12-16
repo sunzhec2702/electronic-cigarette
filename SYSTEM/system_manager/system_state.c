@@ -1,7 +1,7 @@
 #include "system_state.h"
 #include "value_manager.h"
 #include "exti.h"
-#include "screen.h"
+#include "oled.h"
 #include "led.h"
 #include "key.h"
 #include "oled_content.h"
@@ -62,7 +62,7 @@ void check_system_state()
     if (check_charging() == CHARGING && get_sleep_flag() == SLEEP) {
         // SLEEP but wake up by inserting a USB cable. Don't clear sleep flag since we need to sleep again when unplug the usb
         set_system_state(STATE_CHARGING);
-    } else if (check_static_battery() == ERROR) {
+    } else if (check_battery() == ERROR) {
         // Low Battery, Power Off.
         OLED_Clear();
         OLED_Display_On();
@@ -149,7 +149,6 @@ void set_system_state(u8 type)
             system_sleep();
             break;
         case STATE_CHARGING:
-            OLED_Clear();
             EXTIX_DeInit();
             TIMx_Int_Init();
             system_state = type;

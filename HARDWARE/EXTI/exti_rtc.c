@@ -1,7 +1,7 @@
 #include "exti_rtc.h"
 #include "rtc.h"
 #include "iwdg.h"
-#include "screen.h"
+#include "oled.h"
 #include "oled_content.h"
 
 u8 dummy_test = 0;
@@ -50,7 +50,7 @@ void RTC_IRQHandler(void)
         EXTI_ClearIntBitState(EXTI_LINE17);
         iwdg_feed();
         /*
-        Screen_Init();
+        OLED_Init();
         ENABLE_OLED();
         OLED_Display_On();
         draw_battery_icon_charge((dummy_test++)%6);

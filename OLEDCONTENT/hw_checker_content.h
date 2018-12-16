@@ -1,14 +1,13 @@
 #ifndef __HW_CHECKER_CONTENT_H
 #define __HW_CHECKER_CONTENT_H
 #include "sys.h"
-
-#if defined SCREEN_069
-#include "hw_checker_content_ssd1306.h"
-#elif defined SCREEN_096
-#include "hw_checker_content_sh1107.h"
+extern void show_battery_low_message(void);
+extern void show_battery_weak_message(void);
+extern void show_current_high_message(void);
+extern void show_register_short_message(void);
+extern void show_temp_high_message(void);
+extern void show_temp_low_message(void);
+extern void show_voltage_high_message(void);
+extern void show_register_short_message(void);
+extern void show_atomizer_message(void);
 #endif
-
-extern void draw_weak_battery_revert(void);
-
-#endif
-

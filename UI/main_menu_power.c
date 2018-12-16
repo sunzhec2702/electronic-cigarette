@@ -2,8 +2,8 @@
 #include "system_state.h"
 #include "timer_key.h"
 #include "value_manager.h"
+#include "Oled.h"
 #include "oled_content.h"
-#include "screen.h"
 #include "PID.h"
 
 
@@ -24,8 +24,7 @@ void main_power_page_entry(void* pt)
         keys[keys_callback[index].type].key_callback = &keys_callback[index];
     }
     value_write(MAX_PRESET_POWER_VALUE, MAX_POWER_VALUE_W);
-    if(can_draw_icons() == SUCCESS)
-        main_power_draw_whole_screen();
+    main_power_draw_whole_screen();
 }
 
 void main_power_page_exit(void* pt)
@@ -64,7 +63,6 @@ u8 main_power_combine_event_callback(void* keys_t)
 void main_power_draw_whole_screen()
 {
     OLED_Clear();
-    draw_current_mode();
     if (get_current_ui_id() == MAIN_MENU_POWER_ID) {
         draw_power_value(*main_power_get_value_pointer(NULL));
         draw_voltage_value(sqrt_s32q15(Mul_s32q15(*(get_current_ui_page()->get_value_pointer(PID_VALUE)), get_sense_value()->Rstatic_q15))*100>>15);
@@ -78,7 +76,6 @@ void main_power_draw_whole_screen()
     draw_register_value(value_read(REGISTER_STATIC_VALUE));
     draw_current_battery();
     draw_current_lock_icon();
-    draw_split_lines();
     #ifdef DEBUG_CHARGING_BATTERY_VALUE
     draw_register_value(value_read(STATIC_BATTERY_VALUE));
     draw_voltage_value(get_battery_level());

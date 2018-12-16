@@ -3,7 +3,6 @@
 #include "sys.h"
 
 enum {
-    #if defined SCREEN_069
     MENU_SMOKE_KEY_LOCK = 0,
     MENU_SMOKE_POWER_MODE,
     /*
@@ -13,12 +12,6 @@ enum {
     MENU_SMOKE_TEMPERATURE_MODE,
     MENU_SMOKE_SCREEN_FLIP,
     MENU_SMOKE_ABOUT,
-    #elif defined SCREEN_096
-    MENU_SMOKE_KEY_LOCK = 0,
-    MENU_SMOKE_ABOUT,
-    MENU_SMOKE_TEMPERATURE_MODE,
-    MENU_SMOKE_POWER_MODE,
-    #endif
     MENU_SMOKE_MODES_NUMBER
 };
 

@@ -11,7 +11,9 @@
 #include "pid_console_manager.h"
 #include "peripherals_manager.h"
 
+static u32 smoke_start_tic = SMOKE_START_DUMMY_TIC;
 static u16 smoke_time_record = 0;
+
 
 u8 main_menu_temperature_confirm_key_preaction(u8 pressed_keys, void * key_t)
 {
@@ -26,13 +28,10 @@ u8 main_menu_temperature_confirm_key_trigger_action(void * key_t)
     if (key->state == KEY_OFF) {
         // clear flag
         set_pid_lock(PID_UNLOCK);
-        reset_smoke_start_tic();
-        reset_weak_start_tic();
+        smoke_start_tic = SMOKE_START_DUMMY_TIC;
 
         // Confirm Key release, redraw the set value from smoke time.
         if (get_system_smoke() == SYS_SMOKE || get_system_smoke() == SYS_SMOKE_DONE) {
-            if (get_system_lock() != SYS_LOCK)
-                draw_smoke_time(smoke_time_record*SMOKE_RT_PARA_UPDATE_INTERVAL * TIMER_PERIOD / 100);
             ENABLE_FRESH_SCREEN_TIMER(SYS_UNLOCK);
         }
         send_pid_command(CMD_STOP, PID_NOT_RESET);
@@ -60,28 +59,26 @@ u8 main_menu_temperature_confirm_key_long_event_action(void* key_t)
         if (key->press_report_tic >= key->report_tic_interval || key->press_report_tic == 0) {
             key->press_report_tic = 0;
             if ((key->press_keep_tic >= CONFIRM_KEY_PREPARE_TIME) && ((key->press_keep_tic >= key->long_press_interval) || get_system_smoke() == SYS_SMOKE) && (get_system_smoke() != SYS_SMOKE_DONE)) {
-                if (get_smoke_start_tic() == SMOKE_START_DUMMY_TIC) {
-                    set_smoke_start_tic(key->press_keep_tic);
+                if (smoke_start_tic == SMOKE_START_DUMMY_TIC) {
+                    smoke_start_tic = key->press_keep_tic;
                     smoke_time_record = 0;
                 }
                 // HW check. We need to check all the HW before firing
                 if (check_hw_fire() == ERROR) {
                     // clear flag
                     set_pid_lock(PID_UNLOCK);
-                    reset_smoke_start_tic();
+                    smoke_start_tic = SMOKE_START_DUMMY_TIC;
                     send_pid_command(CMD_STOP, PID_RESET);
                     set_system_smoke(SYS_SMOKE_DONE);
                     return ERROR;
                 }
-                if ((key->press_keep_tic - get_smoke_start_tic()) < SMOKE_MAX_TIME_NUMBER) {
+                if ((key->press_keep_tic - smoke_start_tic) < SMOKE_MAX_TIME_NUMBER) {
                     key->repeat_count = 0;
                     send_pid_command(CMD_SMOKE, PID_NOT_RESET);
-                    if ((key->press_keep_tic - get_smoke_start_tic()) >= (smoke_time_record)*SMOKE_RT_PARA_UPDATE_INTERVAL) {
-                        if ((smoke_time_record % SMOKE_RT_PARA_UPDATE_FACTOR) == 0) {
-                            draw_real_time_coil_temperature(value_read(COIL_TEMPERATURE) + get_smoke_time_temperature(), get_degree_mode());
-                            draw_current_value(REGISTER_VALUE);
-                            draw_current_value(PID_POWER_SET_VALUE);
-                        }
+                    if ((key->press_keep_tic - smoke_start_tic) >= (smoke_time_record)*SMOKE_RT_PARA_UPDATE_INTERVAL) {
+                        draw_real_time_coil_temperature(value_read(COIL_TEMPERATURE) + get_smoke_time_temperature(), get_degree_mode());
+                        draw_current_value(REGISTER_VALUE);
+                        draw_current_value(PID_POWER_SET_VALUE);
                         smoke_time_record++;
                     }
                     //draw_smoke_time((key->press_keep_tic - smoke_start_tic) * TIMER_PERIOD / 100);

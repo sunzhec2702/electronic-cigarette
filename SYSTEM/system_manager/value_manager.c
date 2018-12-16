@@ -74,8 +74,6 @@ u16 value_read(u8 value_type)
             return (pid_components->Power_set) * 10 >> 15;
         case PID_POWER_RT_OUT_VALUE:
             return (sense_value->Pout_q15) * 10 >> 15;
-        case PID_WEAK_MAX_POWER_OUT_LIMIT:
-            return (sense_value->Weak_battery_power_limit_q15) * 10 >> 15;
         default:
             return 0xFFFF;
     }

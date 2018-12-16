@@ -28,11 +28,7 @@
 #define CONFIRM_KEY_LONG_PRESS_TIME             200/TIMER_PERIOD // 1000ms change to smoke mode
 #define CONFIRM_KEY_PREPARE_TIME				100/TIMER_PERIOD		//100ms
 
-#define WEAK_BATTERY_SHOW_TIME                  2000/TIMER_PERIOD
-
-
-#define SMOKE_RT_PARA_UPDATE_FACTOR      5
-#define SMOKE_RT_PARA_UPDATE_INTERVAL    10  //100ms
+#define SMOKE_RT_PARA_UPDATE_INTERVAL    50  //500ms
 
 extern u8 confirm_key_trigger_action(void* key_t);
 extern u8 confirm_key_long_event_action(void* key_t);

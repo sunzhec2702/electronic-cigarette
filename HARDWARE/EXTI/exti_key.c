@@ -4,7 +4,7 @@
 #include "system_state.h"
 #include "pwr_manager.h"
 #include "delay.h"
-#include "screen.h"
+#include "oled.h"
 #include "oled_content.h"
 #include "hw_checker.h"
 #include "battery_manager.h"

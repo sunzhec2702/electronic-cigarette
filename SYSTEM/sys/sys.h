@@ -10,23 +10,10 @@
 #define YANMING3    1   // For Yanming's board v1.3
 #include "stdlib.h"
 
-
-#define SW_VER1    2
-#define SW_VER2    2
-#define SW_VER3    9
-
-
-//#define POWER_40W 1
+#define POWER_40W 1
 //#define POWER_60W
-#define POWER_90W
+//#define POWER_90W
 
-
-//#define SCREEN_SSD1306 1
-#define SCREEN_SH1107 1
-//#define SCREEN_SSD1327  1
-
-//#define SCREEN_069    1
-#define SCREEN_096  1
 
 /*
 RTC register list

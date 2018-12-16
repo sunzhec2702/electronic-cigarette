@@ -1,6 +1,6 @@
 #include "menu_new_coil_check.h"
 #include "key.h"
-#include "screen.h"
+#include "Oled.h"
 #include "oled_content.h"
 #include "peripherals_manager.h"
 

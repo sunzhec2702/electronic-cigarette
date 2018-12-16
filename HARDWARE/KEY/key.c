@@ -3,11 +3,8 @@
 #include "key_actions.h"
 #include "system_state.h"
 #include "value_manager.h"
-#include "oled_content_muxlock.h"
 
 static u8 value_key_lock = SYS_UNLOCK;
-static u32 smoke_start_tic = SMOKE_START_DUMMY_TIC;
-static u32 smoke_weak_start_tic = SMOKE_START_DUMMY_TIC;
 
 // declare three key struct.
 static key_state keys[KEY_NUMBER] = {
@@ -165,39 +162,6 @@ void set_value_key_lock_reverse()
     value_key_lock = value_key_lock == SYS_LOCK ? SYS_UNLOCK : SYS_LOCK;
     value_backup_func(VALUE_KEY_LOCK_REG_VALUE, VALUE_KEY_LOCK_REG_OFFSET, VALUE_KEY_LOCK_LEN_MASK, value_key_lock);
 }
-
-u32 get_smoke_start_tic()
-{
-    return smoke_start_tic;
-}
-
-void set_smoke_start_tic(u32 tic_value)
-{
-    smoke_start_tic = tic_value;
-}
-
-void reset_smoke_start_tic()
-{
-    smoke_start_tic = SMOKE_START_DUMMY_TIC;
-}
-
-u32 get_weak_start_tic()
-{
-    return smoke_weak_start_tic;
-}
-
-void set_weak_start_tic(u32 tic_value)
-{
-    smoke_weak_start_tic = tic_value;
-}
-
-void reset_weak_start_tic()
-{
-    smoke_weak_start_tic = SMOKE_START_DUMMY_TIC;
-    unlock_weak_oled();
-}
-
-
 /*
 static u16 key_switch_number = KEY_SWITCH_NUMBER;
 // Read voltage to check if the key is pressed or not since it is not a digital key.

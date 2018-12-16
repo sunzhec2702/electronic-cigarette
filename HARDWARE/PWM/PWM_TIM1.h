@@ -24,14 +24,8 @@
 #define SET_BOOST_REG(X)		(TIMER3->CHCC1 = (X))
 #define SET_BUCK_REG(X)		(TIMER3->CHCC2 = (X))
 
-#if defined SCREEN_SSD1306
 #define	FZDY_EN()				GPIO_SetBits(GPIOB,GPIO_PIN_3)
-#define	FZDY_DISABLE()	        GPIO_ResetBits(GPIOB,GPIO_PIN_3)
-#elif defined SCREEN_SH1107
-#define	FZDY_EN()				GPIO_SetBits(GPIOB,GPIO_PIN_3)
-#define	FZDY_DISABLE()
-#endif
-
+#define	FZDY_DISABLE()	GPIO_ResetBits(GPIOB,GPIO_PIN_3)
 
 #define PWM_OUT_EN()			GPIO_SetBits(GPIOA,GPIO_PIN_15)
 #define PWM_OUT_DISABLE() GPIO_ResetBits(GPIOA,GPIO_PIN_15)

@@ -77,13 +77,4 @@ extern u8 get_value_key_lock(void);
 extern void set_value_key_lock(u8 lock);
 extern void set_value_key_lock_reverse(void);
 
-
-extern u32 get_smoke_start_tic(void);
-extern void set_smoke_start_tic(u32 tic_value);
-extern void reset_smoke_start_tic(void);
-
-extern u32 get_weak_start_tic(void);
-extern void set_weak_start_tic(u32 tic_value);
-extern void reset_weak_start_tic(void);
-
 #endif
