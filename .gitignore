@@ -1,0 +1,17 @@
+OBJ/
+
+*.map
+
+*.lst
+
+*.TMP
+
+USER/JLinkLog.txt
+
+USER/JLinkLog.txt
+
+*.uvprojx
+
+*.Darren
+
+*.orig
